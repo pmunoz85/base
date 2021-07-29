@@ -1,0 +1,63 @@
+<br />
+<br />
+<div class='card border-dark mb-3' style='max-width: 90%;'>
+  <div class='card-header bg-transparent border-dark'><h1>Editar actuación</h1></div>
+  <div class='card-body text-dark'>
+    <h5 class='card-title'>Descripción</h5>
+    <p class='card-text'><form
+        id='editar_actuacion'
+        action='/principales/actuaciones/{{uDatos.id}}/edit'
+        method='post'
+      >
+        <div class='row'>
+          <div class='col-12'>
+            <textarea
+              type='textarea'
+              rows='10'
+              name='descripcion'
+              class='form-control'
+              required
+              autofocus
+            >{{uDatos.descripcion}}</textarea>
+          </div>
+        </div>
+        <br />
+        <div class='row'>
+          <div class='col-12'>
+            <input
+              type='file'
+              class='form-control-file'
+              name='file'
+              id='file'
+              accept='image/png, image/jpeg'
+            />
+          </div>
+        </div>
+        <br />
+        <div class='row'>
+          <div class='col-12'>
+            <label for='esSolucion'><input
+                type='checkbox'
+                name='solucion'
+                id='esSolucion'
+              />
+              Con esta actuación se ha solucionado el problema</label>
+          </div>
+        </div>
+      </form></p>
+  </div>
+  <div class='card-footer bg-transparent border-dark'><button
+      type=' submit'
+      form='editar_actuacion'
+      class='btn btn-success'
+    >
+      Aceptar
+    </button>
+    <button
+      class='btn btn-danger'
+      onclick='window.location = `/principales/{{uDatos.incidencia_id}}`'
+    >
+      Cancelar
+    </button>
+  </div>
+</div>

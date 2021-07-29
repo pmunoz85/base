@@ -1,0 +1,35 @@
+<br />
+<br />
+<div class='card border-dark mb-3' style='max-width: 90%;'>
+  <div class='card-header bg-transparent border-dark'><h1>Nueva incidencia</h1></div>
+  <div class='card-body text-dark'>
+    <h5 class='card-title'>Descripción</h5>
+    <p class='card-text'>
+      <form id='nueva_incidencia' action='/principales' method='post'>
+        <div class='row'>
+          <div class='col-12'>
+            <textarea
+              type='textarea'
+              rows='10'
+              name='descripcion'
+              class='form-control'
+              autofocus
+              required
+            ></textarea>
+          </div>
+        </div>
+      </form>
+    </p>
+  </div>
+  <div class='card-footer bg-transparent border-dark'><button
+      type='submit'
+      form='nueva_incidencia'
+      class='btn btn-success'
+    >
+      Aceptar
+    </button>
+    <button class='btn btn-danger' onclick='window.location = `/principales/`'>
+      Cancelar
+    </button>
+  </div>
+</div>

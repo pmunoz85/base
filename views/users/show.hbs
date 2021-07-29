@@ -1,0 +1,158 @@
+<br />
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div class='card border-dark mb-3' style='max-width: 100%'>
+        <div class='card-header bg-transparent border-dark'>
+          <h1><span class='bi bi-person-fill'></span> Datos del usuario</h1>
+        </div>
+        <div class='card-body text-dark'>
+          <h5 class='card-title'></h5>
+          <p class='card-text'>
+            <strong> ID:</strong> {{uDatos.id}}<br />
+            <strong> Email:</strong> {{uDatos.email}}<br />
+            <strong> Password:</strong> {{uDatos.encrypted_password}}<br />
+          </p>
+          <hr />
+
+          <form id='borrar_usuario' action='/users/{{uDatos.id}}/delete' method='post' class="aqui-token">
+            <input id="usuario_id" type="hidden" name="id_usuario" value="{{uDatos.id}}">
+          </form>
+
+          <button class='btn btn-secondary' onclick="window.location = `/users/{{uDatos.id}}/edit?tokenparam=${localStorage.getItem('b54-token')}`">
+            <span class='bi bi-vector-pen'></span> Modificar usuario
+          </button>
+
+          <button class='btn btn-primary' onclick="window.location = `/users?tokenparam=${localStorage.getItem('b54-token')}`">
+            <span class='bi bi-stack'></span> Volver al índice de usuarios
+          </button>
+
+          <button type='submit' form='borrar_usuario' class='btn btn-danger' onclick='return confirm("¿Está seguro de que quire BORRAR el usuario? \r¡Cuidado! \rEsta acción no se puede deshacer");'>
+            <i class='bi bi-trash'></i> Borrar usuario
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class='card border-dark mb-3' style='max-width: 100%;font-size:x-large;'>
+        <div class='card-header bg-transparent border-dark'>
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <h1><i class="bi bi-ui-checks"></i> Roles</h1>
+              </div>
+              <div class="col-6" >
+                <button id="guardar_roles" class='btn btn-success' disabled onclick="guardarRoles();">
+                  <span class='bi bi-check-circle-fill'></span> Guardar roles   
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='card-body text-dark'>
+          <div id="contenedorRoles" class="container">
+            <div class="row">
+              <div class="col">
+                <h3>Sin asignar</h3>
+                <hr/>
+                <div id="rolesNoAsignados" class='card-text'>
+                  {{#each rolesNoAsignados}}
+                    <button id="{{this}}" class="btn btn-danger" style="margin-bottom: 15px;"> 
+                      <span class="bi bi-arrow-down-square-fill" onclick="asignarRolSeleccionado('{{this}}');"> 
+                        {{this}} 
+                      </span> 
+                    </button>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+            <hr/>
+            <div class="row">
+              <div class="col">
+                <h3>Asignados</h3>
+                <hr/>
+                <div id="rolesAsignados" class='card-text'>
+                  {{#each rolesAsignados}}
+                    <button id="{{this}}" class="btn btn-success" style="margin-bottom: 15px;"> 
+                      <span class="bi bi-arrow-up-square-fill rol-seleccionado" onclick="eliminarRolSeleccionado('{{this}}');"> 
+                        {{this}} 
+                      </span> 
+                    </button>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+  </div>
+</div>
+
+<script>  
+
+  const guardarRoles = () => {
+    const socket = io();
+    const botonGuardarRoles = document.querySelector('#guardar_roles');
+    const rolesSeleccionados = document.querySelectorAll('.rol-seleccionado');
+    const usuarioID = document.querySelector('#usuario_id').getAttribute('value');
+  
+    console.log(usuarioID);
+
+    rolesParaGuardar = [];
+    rolesSeleccionados.forEach((r) => {
+      rolesParaGuardar.push(r.innerHTML.trim());
+    });
+
+    const payload = {
+      usuarioID,
+      rolesParaGuardar,
+      token: localStorage.getItem('b54-token'),
+    };
+
+    socket.emit('guardarRoles', payload, (id, guardado) => {
+      //console.log('funcion ejecutada en el navegador del cliente con los parámetros del serviodr', payload, id, guardado);
+      botonGuardarRoles.disabled = true;
+    });
+  }
+
+  const asignarRolSeleccionado = (rol) => {
+    const bloqueAsignados = document.querySelector('#rolesAsignados');
+    const itemRol = document.querySelector(`#${rol}`);
+    const nuevoSpam = document.createElement("span");
+    const botonGuardarRoles = document.querySelector('#guardar_roles');
+    botonGuardarRoles.disabled = false;
+
+    nuevoSpam.innerHTML = `
+      <button id="${rol}" class="btn btn-success" style="margin-bottom: 15px;"> 
+        <span class="bi bi-arrow-up-square-fill rol-seleccionado" onclick="eliminarRolSeleccionado('${rol}');"> 
+          ${rol} 
+        </span> 
+      </button>
+    `
+    bloqueAsignados.appendChild(nuevoSpam);
+    itemRol.remove();
+  }
+
+  const eliminarRolSeleccionado = (rol) => {
+    const bloqueNoAsignados = document.querySelector('#rolesNoAsignados');
+    const itemRol = document.querySelector(`#${rol}`);
+    const nuevoSpam = document.createElement("span");
+    const botonGuardarRoles = document.querySelector('#guardar_roles');
+    botonGuardarRoles.disabled = false;
+
+    nuevoSpam.innerHTML = `
+      <button id="${rol}" class="btn btn-danger" style="margin-bottom: 15px;"> 
+        <span class="bi bi-arrow-down-square-fill" onclick="asignarRolSeleccionado('${rol}');"> 
+          ${rol} 
+        </span> 
+      </button>
+    `
+    bloqueNoAsignados.appendChild(nuevoSpam);
+    itemRol.remove();
+  }
+
+</script>

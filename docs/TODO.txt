@@ -1,0 +1,23 @@
+
+IMPLEMENTACIONES PENDIENTES
+
+- Identificación de usuarios a través de certificado electrónico.
+
+- Firmar documentación con certificado electrónico.
+
+- Implimentar el consumo de servicios web.
+
+- Creación de documentación PDF.
+
+- Exportar a excel.
+
+- Implementar la subida de ficheros y el almacenamiento de la referencia en la base de datos.
+
+- Hacer test unitarios y de integración.
+
+MEJORAS
+
+- Sustituir las consultas dobles por accesos a las relaciones de Sequalize.
+
+
+

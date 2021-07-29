@@ -1,0 +1,10 @@
+
+<h1>Zona privada HOME</h1>
+<button id="btnUsuarios" class="btn btn-primary">Gestión de usuarios</button>
+
+<script>
+  const botonNuevo = document.querySelector('#btnUsuarios');
+  botonNuevo.addEventListener('click', () => {
+    window.location = `/users?tokenparam=${localStorage.getItem('b54-token')}`;
+  });
+</script>

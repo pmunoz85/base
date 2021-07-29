@@ -1,0 +1,32 @@
+<br />
+<br />
+<div class='card border-dark mb-3' style='max-width: 90%;'>
+  <div class='card-header bg-transparent border-dark'><h1><i class="bi bi-person-fill"></i> Nuevo usuario</h1></div>
+  <div class='card-body text-dark'>
+    <h5 class='card-title'>Datos del usuario</h5>
+    <p class='card-text'>
+      <form id='nuevo_usuario' action='/users' method='post' class="aqui-token">
+        <div class='row' style="padding-bottom: 15px;">
+          <div class='col-12'>
+            <input type='text' name='email' class='form-control' autofocus required placeholder="correo@electronico.com"></input>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-12'>
+            <input type='password' name='password' class='form-control' required placeholder="password"></input>
+          </div>
+        </div>
+      </form>
+    </p>
+  </div>
+  <div class='card-footer bg-transparent border-dark'>
+    <button type='submit' form='nuevo_usuario' class='btn btn-success'>
+      <span class='bi bi-check-circle-fill'></span> Aceptar
+    </button>
+    <button class='btn btn-danger' onclick="window.location = `/users?tokenparam=${localStorage.getItem('b54-token')}`">
+      <span class='bi bi-x-circle-fill'></span> Cancelar
+    </button>
+  </div>
+</div>
+
+

@@ -1,0 +1,124 @@
+<br />
+<br />
+
+<div class='card border-dark mb-3' style='max-width: 90%;'>
+  <div class='card-header bg-transparent border-dark'>
+    <h1>Datos de la incidencia</h1>
+
+  </div>
+  <div class='card-body text-dark'>
+    <h5 class='card-title'></h5>
+    <p class='card-text'>
+      <strong> ID:</strong>
+      {{uDatos.id}}
+      <br />
+      <strong> Descripción:</strong>
+      {{uDatos.descripcion}}
+      <br />
+      <strong> Fecha de creación:</strong>
+      {{uDatos.created_at}}
+      <br />
+      <strong> Fecha de modificación:</strong>
+      {{uDatos.updated_at}}
+      <br />
+
+      <hr />
+
+      <form
+        id='editar_incidencia'
+        action='/principales/{{uDatos.id}}/edit'
+        method='post'
+      ></form>
+
+      <form
+        id='borrar_incidencia'
+        action='/principales/{{uDatos.id}}/delete'
+        method='post'
+      ></form>
+
+      <button type='submit' form='editar_incidencia' class='btn btn-secondary'>
+        <span class='bi bi-check-circle-fill'></span>
+        Modificar incidencia
+      </button>
+
+      <button
+        class='btn btn-primary'
+        onclick='window.location = `/principales`'
+      >
+        <span class='bi bi-stack'></span>
+        Volver al índice de principales
+      </button>
+
+      <button
+        type='submit'
+        form='borrar_incidencia'
+        class='btn btn-danger'
+        onclick='return confirm("Estás seguro de que quires BORRAR la incidencia");'
+      >
+        <span class='bi bi-x-circle-fill'></span>
+        Borrar incidencia
+      </button>
+    </p>
+  </div>
+
+  <div class='card-footer bg-transparent border-dark'>
+    <table style='width: 100%'>
+      <tr>
+        <th class='col-1'></th>
+        <th class='col-7'>Descripción</th>
+        <th class='col-1'>Es solución</th>
+        <th class='col-1'>Creación</th>
+        <th class='col-1'>Actualización</th>
+        <th class='col-1'></th>
+      </tr>
+      {{#each registros}}
+        <tr>
+          <td>
+            <button
+              class='btn btn-secondary'
+              onclick='window.location = `/principales/actuaciones/{{this.id}}/edit`'
+            >
+              <span class='bi bi-vector-pen'></span>
+            </button>
+          </td>
+          <td>{{this.descripcion}}</td>
+          <td>{{this.solucion}}</td>
+          <td>{{this.created_at}}</td>
+          <td>{{this.updated_at}}</td>
+          <td>
+            <button
+              class='btn btn-danger'
+              onclick='if (confirm("Estás seguro de que quires BORRAR la incidencia")) window.location = `/principales/actuaciones/{{this.id}}/delete/{{this.incidencia_id}}`'
+            >
+              <span class='bi bi-x-circle-fill'></span>
+            </button>
+          </td>
+        </tr>
+        {{#if this.file_path}}
+          <tr>
+            <td>
+
+            </td>
+            <td>
+
+              <img src='{{this.file_path}}' alt='' width='100%' height='100%' />
+            </td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </table>
+
+    <hr />
+
+    <button id='btnNuevaActuacion' class='btn btn-dark'><span
+        class='bi bi-plus-square'
+      ></span>
+      Nueva actuación</button>
+    <script>
+      const botonNuevo = document.querySelector('#btnNuevaActuacion');
+      botonNuevo.addEventListener('click', () => { window.location =
+      `/principales/actuaciones/{{uDatos.id}}/new`; });
+    </script>
+
+  </div>
+</div>

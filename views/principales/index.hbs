@@ -1,0 +1,131 @@
+<h1 class='mt-5'>principales registradas</h1>
+<button id='btnNuevaIncidencia' class='btn btn-dark'><span
+    class='bi bi-plus-square'
+  ></span>
+  Nueva incidencia
+</button>
+
+<nav aria-label='Page navigation example'>
+  <ul class='pagination justify-content-end'>
+    <li class='page-item {{previous_disabled}}'>
+      <a
+        class='page-link'
+        href='/principales/?page={{pagina_anterior}}'
+        tabindex='-1'
+        aria-disabled='true'
+      >Anterior</a>
+    </li>
+    {{#each botones_paginas}}
+      <li class='page-item {{#if (eq this ../pagina)}}active{{/if}}' >
+        <a
+          class='page-link' 
+          href='/principales?page={{this}}'
+        >{{this}}</a></li>
+    {{/each}}
+    <li class='page-item {{next_disabled}}'>
+      <a
+        class='page-link'
+        href='/principales/?page={{pagina_posterior}}'
+      >Siguiente</a>
+    </li>
+  </ul>
+</nav>
+
+<hr />
+
+<table style='width: 100%'>
+  <tr>
+    <th class='col-1'></th>
+    <th class='col-8'>Incidencia</th>
+    <th class='col-1'></th>
+    <th class='col-1'>Creación</th>
+    <th class='col-1'>Actualización</th>
+  </tr>
+  {{#each registros}}
+    <tr>
+      <th class='col-1'><hr /></th>
+      <th class='col-8'><hr /></th>
+      <th class='col-1'><hr /></th>
+      <th class='col-1'><hr /></th>
+      <th class='col-1'><hr /></th>
+    </tr>
+    <tr>
+      <td class='col-1'>
+        <button
+          class='btn btn-secondary'
+          onclick='window.location = `/principales/{{this.id}}`'
+        >
+          <span class='bi bi-vector-pen'></span>
+        </button>
+      </td>
+      <td class='col-8'>{{this.descripcion}}</td>
+      <td class='col-1'></td>
+      <td class='col-1'>{{this.created_at}}</td>
+      <td class='col-1'>{{this.updated_at}}</td>
+    </tr>
+    {{#if this.actuaciones}}
+      <tr>
+        <tr>
+          <th></th>
+          <th>Actuación</th>
+          <th>Solución</th>
+          <th>Creación</th>
+          <th>Actualización</th>
+        </tr>
+        {{#each this.actuaciones}}
+          <tr>
+            <td></td>
+            <td>{{this.descripcion}}</td>
+            <td>{{this.solucion}}</td>
+            <td>{{this.created_at}}</td>
+            <td>{{this.updated_at}}</td>
+          </tr>
+          {{#if this.file_path}}
+            <tr>
+              <td>
+              </td>
+              <td>
+                <img src='{{this.file_path}}' alt='' width='100%' height='100%' />
+              </td>
+            </tr>
+          {{/if}}
+        {{/each}}
+
+      </tr>
+    {{/if}}
+  {{/each}}
+</table>
+
+<hr />
+
+<nav aria-label='Page navigation example'>
+  <ul class='pagination justify-content-end'>
+    <li class='page-item {{previous_disabled}}'>
+      <a
+        class='page-link'
+        href='/principales/?page={{pagina_anterior}}'
+        tabindex='-1'
+        aria-disabled='true'
+      >Anterior</a>
+    </li>
+    {{#each array_ultima_pagina}}
+      <li class='page-item {{#if (eq this ../pagina)}}active{{/if}}' >
+        <a
+          class='page-link' 
+          href='/principales?page={{this}}'
+        >{{this}}</a></li>
+    {{/each}}
+    <li class='page-item {{next_disabled}}'>
+      <a
+        class='page-link'
+        href='/principales/?page={{pagina_posterior}}'
+      >Siguiente</a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  const botonNuevo = document.querySelector('#btnNuevaIncidencia');
+  botonNuevo.addEventListener('click', () => { window.location =
+  `/principales/new`; });
+</script>

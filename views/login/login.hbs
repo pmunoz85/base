@@ -1,0 +1,200 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+
+    <!-- CSS only -->
+    <link
+      href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css'
+      rel='stylesheet'
+      integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x'
+      crossorigin='anonymous'
+    />
+
+    <link
+      rel='stylesheet'
+      href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css'
+    />
+
+    <link
+      rel='canonical'
+      href='https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/'
+    />
+
+    <style>
+      .bd-placeholder-img { font-size: 1.125rem; text-anchor: middle;
+      -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+      @media (min-width: 768px) { .bd-placeholder-img-lg { font-size: 3.5rem; }
+      } main > .container { padding: 60px 15px 0; }
+    </style>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js'
+      integrity='sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4'
+      crossorigin='anonymous'
+    ></script>
+
+
+  <!-- CSS only -->
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+  {{#if a_alertas}}
+    <div class='alert alert-danger' role='alert'>
+      Por favor, revise los siguientes errores:
+      <br/>
+      <br/>
+      <ul>
+      {{#each a_alertas}}
+        <li>{{this}}</li>
+      {{/each}}
+      </ul>
+    </div>
+  {{/if }}
+  {{#if alerta}}
+    <div class='alert alert-danger' role='alert'>
+      {{alerta}}
+    </div>
+  {{/if}}
+
+  <div class="login-wrap">
+    <div class="login-html">
+      <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label>
+      <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registrar</label>
+      <div class="login-form">
+        <div class="sign-in-htm">
+          <div class="group">
+            <label for="txtEmail" class="label">Email</label>
+            <input id="txtEmail" name="email" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="txtPassword" class="label">Contraseña</label>
+            <input id="txtPassword" name="password" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <input id="check" type="checkbox" class="check" checked>
+            <label for="check"><span class="icon"></span> Mantener la conexión</label>
+          </div>
+          <div class="group">
+            <input id="btnLogin" type="submit" class="button" value="Login">
+          </div>
+          <div class="hr"></div>
+          <div class="foot-lnk">
+            <a href="/login/forgot">¿Has olvidado la contraseña?</a>
+          </div>
+        </div>
+        <div class="sign-up-htm">
+          <div class="group">
+            <label for="txtNewEmail" class="label">Email</label>
+            <input id="txtNewEmail" name="new_email" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="txtNewPassword" class="label">Contraseña</label>
+            <input id="txtNewPassword" name="new_password" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <label for="txtRepetirPassword" class="label">Repetir contraseña</label>
+            <input id="txtRepetirPassword" name="repetir_password" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <input id="btnRegistrar" type="submit" class="button" value="Registrar">
+          </div>
+          <div class="hr"></div>
+          <div class="foot-lnk">
+            <label for="tab-1">¿Ya estás registrado?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    Server socket status:
+    <span id="lblOnline" class="text-success">Online</span>
+    <span id="lblOffline" class="text-danger">Offline</span>
+  </p>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    const lblOnline = document.querySelector('#lblOnline');
+    const lblOffline = document.querySelector('#lblOffline');
+    const txtEmail = document.querySelector('#txtEmail');
+    const txtPassword = document.querySelector('#txtPassword');
+    const btnLogin = document.querySelector('#btnLogin');
+    const txtNewEmail = document.querySelector('#txtNewEmail');
+    const txtNewPassword = document.querySelector('#txtNewPassword');
+    const txtRepetirPassword = document.querySelector('#txtRepetirPassword');
+    const btnRegistrar = document.querySelector('#btnRegistrar');
+
+    const socket = io();
+
+    socket.on('connect', () => {
+      lblOffline.style.display = 'none';
+      lblOnline.style.display = '';
+    });
+
+    socket.on('disconnect', () => {
+      lblOffline.style.display = '';
+      lblOnline.style.display = 'none';
+    });
+
+    btnRegistrar.addEventListener('click', () => {
+      fetch('/login/singin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: txtNewEmail.value,
+          password: txtNewPassword.value,
+          repetir_password: txtRepetirPassword.value,
+        }),
+      }).then((resp) => {
+        return resp.json();
+      }).then((data) => {
+        if (data.token) {
+          localStorage.setItem('b54-token', data.token);
+          window.location = `/home?tokenparam=${data.token}`;
+        } else {
+          localStorage.removeItem('b54-token');
+          window.location = '/login';
+        }
+      }).catch((e) => {
+        localStorage.removeItem('b54-token');
+        console.log(e);
+        window.location = '/';
+      });
+    });
+
+    btnLogin.addEventListener('click', async () => {
+      fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: txtEmail.value,
+          password: txtPassword.value,
+        }),
+      }).then((resp) => {
+        return resp.json();
+      }).then((data) => {
+        if (data.token) {
+          localStorage.setItem('b54-token', data.token);
+          window.location = `/home?tokenparam=${data.token}`;
+        } else {
+          localStorage.removeItem('b54-token');
+          window.location = '/login';
+        }
+      }).catch((e) => {
+        localStorage.removeItem('b54-token');
+        console.log(e);
+        window.location = '/';
+      });
+    });
+  </script>
+</body>
+
+</html>

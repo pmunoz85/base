@@ -1,0 +1,59 @@
+<h1 class='mt-5'>Resultado de las búsquedas</h1>
+
+<hr />
+
+<table style='width: 100%'>
+  <tr>
+    <th class='col-1'></th>
+    <th class='col-8'>Incidencia</th>
+    <th class='col-1'></th>
+    <th class='col-1'>Creación</th>
+    <th class='col-1'>Actualización</th>
+  </tr>
+  {{#each registros}}
+    <tr>
+      <th class='col-1'><hr /></th>
+      <th class='col-8'><hr /></th>
+      <th class='col-1'><hr /></th>
+      <th class='col-1'><hr /></th>
+      <th class='col-1'><hr /></th>
+    </tr>
+    <tr>
+      <td class='col-1'>
+        <button
+          class='btn btn-secondary'
+          onclick='window.location = `/incidencias/{{this.id}}`'
+        >
+          <span class='bi bi-vector-pen'></span>
+        </button>
+      </td>
+      <td class='col-8'>{{{this.descripcion}}}</td>
+      <td class='col-1'></td>
+      <td class='col-1'>{{this.created_at}}</td>
+      <td class='col-1'>{{this.updated_at}}</td>
+    </tr>
+    {{#if this.actuaciones}}
+      <tr>
+        <tr>
+          <th></th>
+          <th>Actuación</th>
+          <th>Solución</th>
+          <th>Creación</th>
+          <th>Actualización</th>
+        </tr>
+        {{#each this.actuaciones}}
+          <tr>
+            <td></td>
+            <td>{{{this.descripcion}}}</td>
+            <td>{{this.solucion}}</td>
+            <td>{{this.created_at}}</td>
+            <td>{{this.updated_at}}</td>
+          </tr>
+        {{/each}}
+
+      </tr>
+    {{/if}}
+  {{/each}}
+</table>
+
+<hr />

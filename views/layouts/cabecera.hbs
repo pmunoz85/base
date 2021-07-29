@@ -1,0 +1,180 @@
+<html lang='es' class='h-100'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Conocimiento</title>
+
+    <!-- CSS only -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css'/>
+    <link rel='canonical' href='https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/' />
+
+    <style>
+      .bd-placeholder-img { font-size: 1.125rem; text-anchor: middle;
+      -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+      @media (min-width: 768px) { .bd-placeholder-img-lg { font-size: 3.5rem; }
+      } main > .container { padding: 60px 15px 0; }
+    </style>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js' integrity='sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4' crossorigin='anonymous'></script>
+  </head>
+
+  <body class='d-flex flex-column h-100'>
+    <header>
+      <!-- Fixed navbar -->
+      <nav class='navbar navbar-expand-lg navbar-dark fixed-top bg-dark'>
+        <div class='container-fluid'>
+          <button
+            class='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarCollapse'
+            aria-controls='navbarCollapse'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          >
+            <span class='navbar-toggler-icon'></span>
+          </button>
+          <div class='collapse navbar-collapse' id='navbarCollapse'>
+            <ul class='navbar-nav me-auto mb-2 mb-md-0'>
+              <li class='nav-item'> --
+              </li>
+              <li class='nav-item'>
+                <button id="btnLogout" class="btn btn-outline-danger"><i class="bi bi-power"></i></button>
+              </li>
+              <li class='nav-item'> --
+              </li>
+              <li class='nav-item'>
+                <a
+                  class='aqui-token nav-link {{home_active}}'
+                  aria-current='page'
+                  href='/home'
+                ><span class='bi bi-house'></span>
+                  Home</a>
+              </li>
+              <li class='nav-item'>
+                <a
+                  class='aqui-token nav-link {{users_active}}'
+                  href='/users'
+                ><span class='bi bi-people-fill'></span>
+                  Usuarios</a>
+              </li>
+              <li class='nav-item'>
+                <a
+                  class='aqui-token nav-link disabled'
+                  href='#'
+                  tabindex='-1'
+                  aria-disabled='true'
+                >Más opciones</a>
+              </li>
+              <li class='nav-item'>
+                <a
+                  class='aqui-token nav-link disabled'
+                  href='#'
+                  tabindex='-1'
+                  aria-disabled='true'
+                ><i class='bi bi-three-dots-vertical'></i></a>
+              </li>
+              <li class='nav-item'>
+                <a
+                  class='aqui-token nav-link {{actual_active}}'
+                  href='/users/actual'
+                ><span class='bi bi-gear-fill'></span> {{ email_usuario }} </a>
+              </li>
+            </ul>
+            <form action='/buscar' method='POST' class='aqui-token d-flex'>
+              <input
+                class='form-control me-2'
+                type='search'
+                placeholder='Cadena de búsqueda'
+                aria-label='Search'
+                name='busqueda'
+              />
+              <button class='btn btn-outline-success' type='submit'>
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    </header>
+
+    <!-- Begin page content -->
+    <main class='flex-shrink-0'>
+      <div class='container'>
+        {{#if alerta}}
+          <div class='alert alert-danger' role='alert'>
+            {{alerta}}
+          </div>
+        {{/if}}
+
+        {{{body}}}
+
+      </div>
+    </main>
+
+    <footer class='footer mt-auto py-3 bg-light'>
+      <div class='container'>
+        <h2><span class='text-muted'>Pedro Manuel Muñoz Morales © 2021 </span></h2>
+        <div class="pull-right">
+          Fecha de la última edición 28/07/2021
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <h3><span class="bi bi-lock-fill"></span> Protección de datos</h3>
+            <hr />
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En cumplimiento de las prescripciones establecidas en la Ley Orgánica 3/2018, de 5 de  diciembre, de Protección de Datos Personales y garantía de los derechos digitales y el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos, puede consultar la Política de Protección de Datos visitando la página web de la Agencia Española de Protección de Datos accesible a través de este enlace.
+              <br />
+              <br />
+              <a href="https://www.boe.es/legislacion/codigos/codigo.php?id=055_Proteccion_de_Datos_de_Caracter_Personal&modo=1%20" target="_blank">Agencia Española de Protección de Datos</a>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> 
+            <h3><span class="bi bi-envelope-fill" ></span> Contacto</h3>
+            <hr />
+            Pedro Manuel Muñoz Morales <br />
+            Calle y número<br />
+            Teléfono: XXX XX XX XX <br />
+            Extensión: XXXX <br />
+            © 2021 <br />
+            <br />
+            <a href="mailto:pmunoz85@alumno.uned.es">pmunoz85@alumno.uned.es</a>
+          </div>
+
+          <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12"> 
+            <h3><span class="bi bi-cpu-fill"></span> Tecnologías utilizadas</h3> 
+            <hr />
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En este desarrollo utilizamos varias tecnologías Open Source. Como lenguaje de desarrollo principal utilizamos JavaScript, tanto en la parte frontal como en el servidor. En la parte del Backend utilizamos NodeJS para el entorno de ejecución de JavaScript, npm para la gestión de paquetes, Handlebars para la construcción dinámica de páginas HTML y Postgresql como servidor de bases de datos. En la parte del Frontend, utilizamos HTML y CSS como lenguaje de maquetado, Bootstrap como framework de CSS, JavaScript para la manipulación del la página web, la libreria Socket.io para la comunicación con el servidor y diversas tecnologías más. Con ello conseguimos una experiencia de usuario dinámica y amigable. </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type='text/javascript'>
+      const btnLogout = document.querySelector('#btnLogout');
+      btnLogout.addEventListener('click', () => {
+        if (confirm('¿Está seguro de querer salir de la App?') ) {
+          localStorage.removeItem('b54-token'); 
+          window.location = '/'; 
+        }
+      });
+
+      const a_enlaces = document.querySelectorAll('.aqui-token'); 
+      for (let i = 0; i < a_enlaces.length; i++) { 
+        const _simbolo = a_enlaces[i].toString().includes('?') ? '&' : '?'; 
+        if (a_enlaces[i].getAttribute('href')) { 
+          a_enlaces[i].href = `${a_enlaces[i].href}${_simbolo}tokenparam=${localStorage.getItem('b54-token')}`;
+        } 
+        if (a_enlaces[i].getAttribute('action')) { 
+          a_enlaces[i].action = `${a_enlaces[i].action}${_simbolo}tokenparam=${localStorage.getItem('b54-token')}`;
+        } 
+      }
+    </script>
+
+  </body>
+</html>

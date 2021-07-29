@@ -1,0 +1,37 @@
+  <br />
+  <br />
+  <div class='card border-dark mb-3' style='max-width: 90%;'>
+    <div class='card-header bg-transparent border-dark'>
+      <h1><i class="bi bi-person-fill"></i> Actualizar contraseña</h1>
+    </div>
+    <div class='card-body text-dark'>
+      <h5 class='card-title'>{{ uDatos.email }}</h5>
+      <p class='card-text'>
+
+        <form id="editar_usuario" action="/users/{{ uDatos.id }}/actual" method="post" class="aqui-token">
+
+          <div class="row" style="padding-bottom: 15px;">
+            <div class="col-12">
+              <input type="password" name="actual_password" class="form-control" required value="" required autofocus placeholder="Contraseña actual">
+            </div>
+          </div>
+
+          <div class="row" style="padding-bottom: 15px;">
+            <div class="col-12">
+              <input type="password" name="password" class="form-control" required value="" required placeholder="Nueva contraseña">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <input type="password" name="repetir_password" class="form-control" required value="" required placeholder="Repetir contraseña">
+            </div>
+          </div>
+        </form>
+      </p>
+    </div>
+    <div class='card-footer bg-transparent border-dark'>
+      <button type="submit" form="editar_usuario" class="btn btn-success"><span class='bi bi-check-circle-fill'></span> Aceptar</button>
+      <button class="btn btn-danger" onclick="window.location = `/home?tokenparam=${localStorage.getItem('b54-token')}`"><span class='bi bi-x-circle-fill'></span> Cancelar</button>
+    </div>
+  </div>
