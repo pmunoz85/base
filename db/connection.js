@@ -44,10 +44,10 @@ db.sequelize = sequelize;
 db.Users = require('../models/users')(db.sequelize, db.Sequelize);
 db.Tokens = require('../models/tokens')(db.sequelize, db.Sequelize);
 db.UserRol = require('../models/user_rol')(db.sequelize, db.Sequelize);
-db.Principales = require('../models/principales')(db.sequelize, db.Sequelize);
-db.Secundarios = require('../models/secundarios')(db.sequelize, db.Sequelize);
+// db.Principales = require('../models/principales')(db.sequelize, db.Sequelize);
+// db.Secundarios = require('../models/secundarios')(db.sequelize, db.Sequelize);
 
-db.Principales.hasMany(db.Secundarios);
-db.Secundarios.belongsTo(db.Principales);
+// db.Principales.hasMany(db.Secundarios);
+// db.Secundarios.belongsTo(db.Principales);
 
 module.exports = db;

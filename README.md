@@ -11,4 +11,4 @@ El proyecto se ha realizado utilizando herramientas y lenguajes Open Source.
 - También se ha hecho uso del sistema de pantilla Handlebars para servir contenido dinámico en las páginas.
 - Utilización de la biblioteca Socket.io para mejorar la experiencia de usuario.
 - En el apartado de bases de datos, hemos optado por almacenar la información en un servidor de bases de datos PostgreSql.
-- La plataforma utilizada para el despliegue en producción ha sido Heroku en la siguiente URL https://XXXX.herokuapp.com
+- La plataforma utilizada para el despliegue en producción ha sido Heroku en la siguiente URL https://andamios.herokuapp.com/

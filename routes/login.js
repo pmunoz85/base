@@ -98,7 +98,7 @@ const verificarSingin = [
   check('email', 'El correo electrónico es obligatorio').isEmail(),
   check('password', 'Necesita aportar la contraseña').not().isEmpty(),
   check('repetir_password', 'Debe aportar la contraseña repetida').not().isEmpty(),
-  check('repetir_password', 'Las contraseñas deben coincidir').custom(( value, { req } ) => { value === req.body.password}),
+  check('repetir_password', 'Las contraseñas deben coincidir').custom(( value, { req } ) => { return value === req.body.password; }),
   check('email').custom(elEmailYaExiste),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -120,7 +120,17 @@ const crearUsuario = async (u) => {
   };
 
   try {
-    await db.Users.build(nUsuario).save();
+    const contador = await db.Users.count({});
+    const usuario = await db.Users.create(nUsuario);
+    let identificadorRol = 'Invitado';
+
+    if (contador === 0) 
+      identificadorRol = 'Administrador';
+
+    await db.UserRol.create({
+      user_id: usuario.dataValues.id,
+      rol: identificadorRol
+    });
   } catch (error) {
     console.log(error);
   }
@@ -181,20 +191,17 @@ module.exports = () => {
               globalThis.alertaGlobal = 'Contraseña actualizada correctamente';
               console.log(`Contraseña actualizada correctamente ${JSON.stringify(actualizado, null, 2)}` );
               res.redirect(`/login`);
-              //globalThis.alertaGlobal = '';
             });
           });
         }
         else {
           globalThis.alertaGlobal = 'ERROR: la nueva contraseña y la repetición de la misma debe coincidir, vuelva a intentarlo';
           res.redirect(`/login/reset?tokenparam=${req.query.tokenparam}`);
-          //globalThis.alertaGlobal = '';
         }
       }).catch((error) => {
         globalThis.alertaGlobal = 'ERROR: no fue posible modificar el usuario correctamente, vuelva a intentarlo';
         console.log(error);
         res.redirect(`/login?tokenparam=${req.query.tokenparam}`);
-        //globalThis.alertaGlobal = '';
       });
     });
 

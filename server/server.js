@@ -53,7 +53,7 @@ class Server {
     this.app.use('/login', require('../routes/login')());
     this.app.use('/home', require('../routes/home')());
     this.app.use('/users', require('../routes/users')());
-    this.app.use('/principales', require('../routes/principales')());
+//    this.app.use('/principales', require('../routes/principales')());
     this.app.use('/buscar', require('../routes/buscar')());
     /*
     this.app.use('/', (req, res, next) => {
