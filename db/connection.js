@@ -5,6 +5,13 @@ let sequelize;
 if (process.env.DATABASE_URL) {
   // PostgreSql Heroku PRODUCTION
   sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }, 
+/*
     dialect: 'postgres',
     protocol: 'postgres',
     native: true,
@@ -16,6 +23,7 @@ if (process.env.DATABASE_URL) {
       acquire: 30000,
       idle: 10000,
     },
+*/
   });
 } else {
   // PostgreSql
